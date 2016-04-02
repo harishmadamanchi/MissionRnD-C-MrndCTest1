@@ -28,11 +28,65 @@ Difficulty : Medium
 #include <stdlib.h>
 #include <stdio.h>
 
+struct node *merge(struct node *, struct node *);
+
 struct node{
 	int data;
 	struct node *next;
 };
 int merge_circularlists(struct node **head1, struct node **head2){
 	//Returns Length of merged Sorted circular SLL and also points *head1 to final SLL .
-	return -1;
+	int count = 0;
+	if (*head1==NULL && *head2==NULL)
+		return -1;
+	struct node *temp1, *temp2, *temp;
+	temp1 = *head1;
+	temp = *head1;
+	while (1){
+		if (temp->next == *head1){
+			temp->next = NULL;
+			break;
+		}
+		temp = temp->next;
+	}
+	temp2 = *head2;
+	while (1){
+		if (temp->next == *head1)
+		{
+			temp->next = NULL;
+			break;
+		}
+		temp = temp->next;
+	}
+	temp1=merge(temp1,temp2);
+	temp = temp1;
+	while (temp->next != NULL){
+		count++;
+		temp = temp->next;
+	}
+	temp->next = temp1;
+	count++;
+	return count;
+}
+
+struct node *merge(struct node *a, struct node *b)
+{
+	struct node *temp = NULL;
+	if (a == NULL)
+		return b;
+
+	else if (b == NULL)
+		return a;
+	if (a->data <= b->data)
+	{
+
+		temp = a;
+		temp->next = merge(a->next, b);
+	}
+	else  if (b->data <= a->data)
+	{
+		temp = b;
+		temp->next = merge(a, b->next);
+	}
+	return temp;
 }

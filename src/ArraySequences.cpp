@@ -31,7 +31,38 @@ Difficulty : Medium
 #include <stdio.h>
 #include <math.h>
 
+int apfunction(int *, int *, int);
+
 int * find_sequences(int *arr, int len){
 	//Return final array which has 6indexes [AP1_S,AP1_E,AP2_S,AP2_E,GP1_S,GP2_E]
+	int *brr;
+	brr = (int*)malloc(sizeof(int));
+	int i, j;
+	i = 2;
+	while (i < len){
+		i = apfunction(arr, brr, i,len);
+	}
+	i = 1;
+	while (i < len){
+		i = gpfunction(arr, brr, i, len);
+	}
 	return NULL;
+}
+
+int apfunction(int *arr, int *brr, int i, int len){
+	int index1, index2, dif;
+	if (arr[i] - arr[i - 1] == arr[i - 1] - arr[i - 2]){
+		index1 = i - 2;
+		index2 = i;
+		dif = arr[i] - arr[i - 1];
+	}
+	else{
+		return i + 1;
+	}
+	for (int j = i + 1; j < len; j++){
+		if (dif != arr[j] - arr[j - 1])
+			break;
+		index2 = j;
+	}
+	return index2;
 }
