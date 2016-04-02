@@ -42,7 +42,7 @@ int * find_sequences(int *arr, int len){
 	while (i < len){
 		i = apfunction(arr, brr, i,len);
 	}
-	i = 1;
+	i = 2;
 	while (i < len){
 		i = gpfunction(arr, brr, i, len);
 	}
@@ -62,6 +62,24 @@ int apfunction(int *arr, int *brr, int i, int len){
 	for (int j = i + 1; j < len; j++){
 		if (dif != arr[j] - arr[j - 1])
 			break;
+		index2 = j;
+	}
+	return index2;
+}
+
+int gpfunction(int *arr, int *brr, int i, int len){
+	int index1, index2, div;
+	if (arr[i] / arr[i - 1] == arr[i - 1] / arr[i]){
+		index1 = i - 2;
+		index2 = i;
+		div = arr[i] / arr[i - 1];
+	}
+	else
+		return i + 1;
+	for (int j = i + 1; j < len; j++){
+		if (div != arr[j] / arr[j - 1]){
+			break;
+		}
 		index2 = j;
 	}
 	return index2;
